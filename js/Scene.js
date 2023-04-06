@@ -124,6 +124,7 @@ class Scene {
     }
     document.querySelector(".center").textContent = `Center: (${offset[0].toFixed(5)}, ${offset[1].toFixed(5)})`;
 
+    /*
     let initialX, initialY, currentX, currentY;
 
     gl.canvas.addEventListener('touchstart', function (e) {
@@ -138,8 +139,8 @@ class Scene {
         currentX = e.touches[0].pageX - initialX;
         currentY = e.touches[0].pageY - initialY;
 
-        offset[0] -= currentX / gl.canvas.clientHeight * zoom;
-        offset[1] += currentY / gl.canvas.clientHeight * zoom;;
+        offset[0] = -currentX / gl.canvas.clientHeight * zoom;
+        offset[1] = currentY / gl.canvas.clientHeight * zoom;;
         gl.uniform2f(mousePositionLocation, offset[0], offset[1]);
         document.querySelector(".center").textContent = `Center: (${offset[0].toFixed(5)}, ${offset[1].toFixed(5)})`;
 
@@ -163,6 +164,7 @@ class Scene {
       initialX = currentX;
       initialY = currentY;
     });
+    */
 
     gl.canvas.addEventListener('mousedown', onMouseDown);
     gl.canvas.addEventListener('wheel', onMouseScroll);
