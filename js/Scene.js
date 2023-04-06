@@ -127,16 +127,16 @@ class Scene {
     let initialX, initialY, currentX, currentY;
 
     gl.canvas.addEventListener('touchstart', function (e) {
-      initialX = e.touches[0].clientX;
-      initialY = e.touches[0].clientY;
+      initialX = e.touches[0].pageX;
+      initialY = e.touches[0].pageY;
     });
 
     gl.canvas.addEventListener('touchmove', function (e) {
       if (e.touches.length === 1) {
         e.preventDefault();
 
-        currentX = e.touches[0].clientX - initialX;
-        currentY = e.touches[0].clientY - initialY;
+        currentX = e.touches[0].pageX - initialX;
+        currentY = e.touches[0].pageY - initialY;
 
         offset[0] -= currentX / gl.canvas.clientHeight * zoom;
         offset[1] += currentY / gl.canvas.clientHeight * zoom;;
