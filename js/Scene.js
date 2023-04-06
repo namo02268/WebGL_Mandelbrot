@@ -124,12 +124,23 @@ class Scene {
     }
     document.querySelector(".center").textContent = `Center: (${offset[0].toFixed(5)}, ${offset[1].toFixed(5)})`;
 
+    let initialX, initialY, currentX, currentY;
+
+    gl.canvas.addEventListener('touchstart', function (e) {
+      initialX = e.touches[0].clientX;
+      initialY = e.touches[0].clientY;
+    });
+
     gl.canvas.addEventListener('touchmove', function (e) {
       if (e.touches.length === 1) {
         e.preventDefault();
 
-        offset[0] = -e.touches[0].clientX / gl.canvas.clientHeight * zoom;
-        offset[1] = e.touches[0].clientY / gl.canvas.clientHeight * zoom;;
+
+        currentX = e.touches[0].clientX - initialX;
+        currentY = e.touches[0].clientY - initialY;
+
+        offset[0] = -currentX / gl.canvas.clientHeight * zoom;
+        offset[1] = currentY / gl.canvas.clientHeight * zoom;;
         gl.uniform2f(mousePositionLocation, offset[0], offset[1]);
         document.querySelector(".center").textContent = `Center: (${offset[0].toFixed(5)}, ${offset[1].toFixed(5)})`;
 
@@ -147,6 +158,11 @@ class Scene {
         gl.uniform1f(scrollLocation, zoom);
         document.querySelector(".zoom").textContent = `Zoom: ${(1 / zoom).toFixed(5)}`;
       }
+    });
+
+    gl.canvas.addEventListener('touchend', function (e) {
+      initialX = currentX;
+      initialY = currentY;
     });
 
     gl.canvas.addEventListener('mousedown', onMouseDown);
