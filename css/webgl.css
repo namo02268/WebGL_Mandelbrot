@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+}
+
+canvas {
+  background-color: block;
+  display: block;
+  /* prevents scrollbar */
+  width: 100vw;
+  height: 100vh;
+}
+
+video {
+  display: none;
+}
+
+.canvasText {
+  font-size: 200%;
+  color: black;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+}
