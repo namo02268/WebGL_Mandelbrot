@@ -135,12 +135,11 @@ class Scene {
       if (e.touches.length === 1) {
         e.preventDefault();
 
-
         currentX = e.touches[0].clientX - initialX;
         currentY = e.touches[0].clientY - initialY;
 
-        offset[0] = -currentX / gl.canvas.clientHeight * zoom;
-        offset[1] = currentY / gl.canvas.clientHeight * zoom;;
+        offset[0] -= currentX / gl.canvas.clientHeight * zoom;
+        offset[1] += currentY / gl.canvas.clientHeight * zoom;;
         gl.uniform2f(mousePositionLocation, offset[0], offset[1]);
         document.querySelector(".center").textContent = `Center: (${offset[0].toFixed(5)}, ${offset[1].toFixed(5)})`;
 
@@ -153,7 +152,7 @@ class Scene {
           Math.pow(touch2.clientX - touch1.clientX, 2) +
           Math.pow(touch2.clientY - touch1.clientY, 2)
         );
-        zoom = zoom + distance;
+        zoom = zoom + distance * 0.001;
 
         gl.uniform1f(scrollLocation, zoom);
         document.querySelector(".zoom").textContent = `Zoom: ${(1 / zoom).toFixed(5)}`;
