@@ -137,8 +137,10 @@ class Scene {
         currentX = e.touches[0].clientX - initialX;
         currentY = e.touches[0].clientY - initialY;
 
-        offset[0] = currentX;
-        offset[1] = currentY;
+        offset[0] = currentX / gl.canvas.clientHeight * zoom;
+        offset[1] = currentY / gl.canvas.clientHeight * zoom;;
+        gl.uniform2f(mousePositionLocation, offset[0], offset[1]);
+        document.querySelector(".center").textContent = `Center: (${offset[0].toFixed(5)}, ${offset[1].toFixed(5)})`;
 
       } else if (e.touches.length === 2) {
         let touch1 = e.touches[0];
