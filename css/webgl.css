@@ -1,5 +1,8 @@
 * {
   margin: 0;
+  -webkit-user-select: none;
+  user-select: none;
+  overflow: hidden;
 }
 
 canvas {
@@ -8,6 +11,7 @@ canvas {
   /* prevents scrollbar */
   width: 100vw;
   height: 100vh;
+  image-rendering: crisp-edges;
 }
 
 video {
