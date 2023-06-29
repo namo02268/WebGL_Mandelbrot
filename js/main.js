@@ -6,7 +6,8 @@ window.onload = main;
 //
 function main() {
   //-------------------Init GL-------------------//
-  const canvas = document.querySelector("#glCanvas");
+  const canvas = document.createElement('canvas');
+  //  const canvas = document.querySelector("#glCanvas");
   gl = canvas.getContext("webgl");
   if (!gl) {
     alert(
@@ -14,6 +15,8 @@ function main() {
     );
     return;
   }
+  document.body.appendChild(canvas);
+  document.querySelector(".version").textContent = `Version: ${2.0.toFixed(1)}`;
 
   //-------------------Init Scene-------------------//
   const scene = new Scene();
