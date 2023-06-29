@@ -7,10 +7,8 @@
 
 canvas {
   background-color: block;
-  display: block;
-  /* prevents scrollbar */
   width: 100vw;
-  height: 100vh;
+  height: 100svh;
   image-rendering: crisp-edges;
 }
 
