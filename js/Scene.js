@@ -43,8 +43,8 @@ class Scene {
     document.querySelector(".zoom").textContent = `Zoom: ${(1 / zoom).toFixed(5)}`;
 
     if (this.inputHandler.IsMouseDown()) {
-      offset[0] += this.inputHandler.DeltaX() / gl.canvas.clientHeight * zoom;
-      offset[1] -= this.inputHandler.DeltaY() / gl.canvas.clientHeight * zoom;
+      offset[0] += this.inputHandler.DeltaX() / gl.canvas.height * zoom;
+      offset[1] -= this.inputHandler.DeltaY() / gl.canvas.height * zoom;
       gl.uniform2f(this.#shader.GetUniformLocation("offset"), offset[0], offset[1]);
     }
     document.querySelector(".pos").textContent = `Position: (${offset[0].toFixed(5)}, ${offset[1].toFixed(5)})`;
@@ -57,8 +57,8 @@ class Scene {
   }
 
   #Resize() {
-    const displayWidth = gl.canvas.clientWidth;
-    const displayHeight = gl.canvas.clientHeight;
+    const displayWidth = gl.canvas.parentElement.clientWidth;
+    const displayHeight = gl.canvas.parentElement.clientHeight;
 
     if (gl.canvas.width !== displayWidth || gl.canvas.height !== displayHeight) {
       gl.canvas.width = displayWidth;
