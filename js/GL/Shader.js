@@ -35,6 +35,14 @@ class Shader {
     return gl.getUniformLocation(this.#m_handle, name);
   }
 
+  SetUniform1f(name, value) {
+    gl.uniform1f(this.GetUniformLocation(name), value);
+  }
+
+  SetUniform2f(name, value1, value2) {
+    gl.uniform2f(this.GetUniformLocation(name), value1, value2);
+  }
+
   SetUniformMatrix4(name, value) {
     gl.uniformMatrix4fv(this.GetUniformLocation(name), false, value);
   }
