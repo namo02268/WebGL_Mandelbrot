@@ -7,17 +7,15 @@ class InputHandler {
   #isMouseDown = false;
 
   constructor() {
-    gl.canvas.addEventListener('pointermove', (event) => {
+    window.addEventListener('pointermove', (event) => {
       this.#deltaX = this.#X - event.clientX;
       this.#deltaY = this.#Y - event.clientY;
       this.#X = event.clientX;
       this.#Y = event.clientY;
     });
 
-    window.addEventListener('pointerdown', (event) => {
+    window.addEventListener('pointerdown', () => {
       this.#isMouseDown = true
-      this.#X = event.clientX;
-      this.#Y = event.clientY;
     });
 
     window.addEventListener('pointerup', () => {
