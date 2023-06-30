@@ -14,8 +14,10 @@ class InputHandler {
       this.#Y = event.clientY;
     });
 
-    window.addEventListener('pointerdown', () => {
+    window.addEventListener('pointerdown', (event) => {
       this.#isMouseDown = true
+      this.#X = event.clientX;
+      this.#Y = event.clientY;
     });
 
     window.addEventListener('pointerup', () => {
