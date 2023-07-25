@@ -27,6 +27,23 @@ class InputHandler {
     window.addEventListener('wheel', (event) => {
       this.#scroll = event.deltaY;
     });
+
+    window.addEventListener('touchmove', (event) => {
+      if (e.touches.length > 1) {
+        w_abs_move = Math.abs(event.touches[1].pageX - event.touches[0].pageX);
+        h_abs_move = Math.abs(event.touches[1].pageY - event.touches[0].pageY);
+        touchmove_bar = w_abs_move * h_abs_move;
+        area_bar = touchstart_bar - touchmove_bar;
+        // 拡大
+        if (area_bar < 0) {
+          this.#scroll = 1.0;
+        }
+        // 縮小
+        else if (area_bar > 0) {
+          this.#scroll = -1.0;
+        }
+      }
+    });
   }
 
   Update() {
