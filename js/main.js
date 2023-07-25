@@ -1,9 +1,6 @@
 let gl;
 window.onload = main;
 
-//
-// Start here
-//
 function main() {
   //-------------------Init GL-------------------//
   const canvas = document.createElement('canvas');
@@ -16,7 +13,6 @@ function main() {
     return;
   }
   document.body.appendChild(canvas);
-  document.querySelector(".version").textContent = `Version: ${2.8.toFixed(1)}`;
 
   //-------------------Init Scene-------------------//
   const scene = new Scene();

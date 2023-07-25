@@ -39,6 +39,7 @@ class Scene {
     } else if (this.inputHandler.Scroll() < 0) {
       zoom *= zoomStep;
     }
+
     gl.uniform1f(this.#shader.GetUniformLocation("zoom"), zoom);
     document.querySelector(".zoom").textContent = `Zoom: ${(1 / zoom).toFixed(5)}`;
 
