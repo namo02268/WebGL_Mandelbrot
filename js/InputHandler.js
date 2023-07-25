@@ -1,3 +1,4 @@
+let area_bar = 0;
 class InputHandler {
   #X = 0;
   #Y = 0;
@@ -34,7 +35,6 @@ class InputHandler {
         h_abs_move = Math.abs(event.touches[1].pageY - event.touches[0].pageY);
         touchmove_bar = w_abs_move * h_abs_move;
         area_bar = touchstart_bar - touchmove_bar;
-        document.querySelector(".area").textContent = `area: ${(area_bar).toFixed(2)}`;
         // 拡大
         if (area_bar < 0) {
           this.#scroll = 1.0;
@@ -51,6 +51,7 @@ class InputHandler {
     this.#deltaX = 0;
     this.#deltaY = 0;
     this.#scroll = 0;
+    document.querySelector(".area").textContent = `area: ${(area_bar).toFixed(2)}`;
   }
 
   X() {

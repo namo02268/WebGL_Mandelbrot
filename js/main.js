@@ -16,7 +16,7 @@ function main() {
     return;
   }
   document.body.appendChild(canvas);
-  document.querySelector(".version").textContent = `Version: ${2.7.toFixed(1)}`;
+  document.querySelector(".version").textContent = `Version: ${2.8.toFixed(1)}`;
 
   //-------------------Init Scene-------------------//
   const scene = new Scene();
