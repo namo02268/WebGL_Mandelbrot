@@ -34,6 +34,7 @@ class InputHandler {
         h_abs_move = Math.abs(event.touches[1].pageY - event.touches[0].pageY);
         touchmove_bar = w_abs_move * h_abs_move;
         area_bar = touchstart_bar - touchmove_bar;
+        document.querySelector(".area").textContent = `area: ${(area_bar).toFixed(2)}`;
         // 拡大
         if (area_bar < 0) {
           this.#scroll = 1.0;
