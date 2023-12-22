@@ -1,4 +1,5 @@
 class InputHandler {
+  // メンバ変数
   #X = 0;
   #Y = 0;
   #deltaX = 0;
@@ -7,6 +8,7 @@ class InputHandler {
   #isMouseDown = false;
   #isTouching = false;
 
+  // コンストラクタ
   constructor() {
     window.addEventListener('pointermove', (event) => {
       this.#deltaX = this.#X - event.clientX;
@@ -30,7 +32,7 @@ class InputHandler {
     });
 
     window.addEventListener("touchstart", (e) => {
-      if (e.touches.length === 1) {
+      if (e.touches.length == 1) {
         // Only one finger is touching, handle movement
         this.#isTouching = true;
         this.#X = e.touches[0].clientX;
@@ -42,7 +44,7 @@ class InputHandler {
     }, { passive: false });
 
     window.addEventListener("touchmove", (e) => {
-      if (this.#isTouching && e.touches.length === 1) {
+      if (e.touches.length == 1) {
         this.#deltaX = this.#X - e.touches[0].clientX;
         this.#deltaY = this.#Y - e.touches[0].clientY;
         this.#X = e.touches[0].clientX;
@@ -55,31 +57,38 @@ class InputHandler {
     });
   }
 
+  // アップデート・変数のリセット
   Update() {
     this.#deltaX = 0;
     this.#deltaY = 0;
     this.#scroll = 0;
   }
 
+  // X座標の取得
   X() {
     return this.#X;
   }
 
+  // Y座標の取得
   Y() {
     return this.#Y;
   }
 
+  // X変化量の取得
   DeltaX() {
     return this.#deltaX;
   }
 
+  // Y変化量の取得
   DeltaY() {
     return this.#deltaY;
   }
 
+  // スクロール量の取得
   Scroll() {
     return this.#scroll;
   }
+
 
   IsMouseDown() {
     return this.#isMouseDown;
