@@ -27,6 +27,13 @@ class InputHandler {
     window.addEventListener('wheel', (event) => {
       this.#scroll = event.deltaY;
     });
+
+    // 操作禁止
+    window.addEventListener("touchstart", (e) => {
+      if (e.touches.length > 1) {
+        e.preventDefault();
+      }
+    }, { passive: false });
   }
 
   Update() {
