@@ -5,6 +5,7 @@ class InputHandler {
   #deltaY = 0;
   #scroll = 0;
   #isMouseDown = false;
+  #isTouching = false;
 
   constructor() {
     window.addEventListener('pointermove', (event) => {
@@ -28,12 +29,30 @@ class InputHandler {
       this.#scroll = event.deltaY;
     });
 
-    // 操作禁止
     window.addEventListener("touchstart", (e) => {
-      if (e.touches.length > 1) {
+      if (e.touches.length === 1) {
+        // Only one finger is touching, handle movement
+        this.#isTouching = true;
+        this.#X = e.touches[0].clientX;
+        this.#Y = e.touches[0].clientY;
+      } else {
+        // Multiple fingers are touching, prevent default action
         e.preventDefault();
       }
     }, { passive: false });
+
+    window.addEventListener("touchmove", (e) => {
+      if (this.#isTouching && e.touches.length === 1) {
+        this.#deltaX = this.#X - e.touches[0].clientX;
+        this.#deltaY = this.#Y - e.touches[0].clientY;
+        this.#X = e.touches[0].clientX;
+        this.#Y = e.touches[0].clientY;
+      }
+    });
+
+    window.addEventListener("touchend", () => {
+      this.#isTouching = false;
+    });
   }
 
   Update() {
