@@ -32,11 +32,11 @@ class InputHandler {
     });
 
     window.addEventListener("touchstart", (e) => {
-      if (e.touches.length == 1) {
+      if (e.touches.length === 1) {
         // Only one finger is touching, handle movement
         this.#isTouching = true;
-        this.#X = e.touches[0].clientX;
-        this.#Y = e.touches[0].clientY;
+        //        this.#X = e.touches[0].clientX;
+        //        this.#Y = e.touches[0].clientY;
       } else {
         // Multiple fingers are touching, prevent default action
         e.preventDefault();
@@ -44,11 +44,11 @@ class InputHandler {
     }, { passive: false });
 
     window.addEventListener("touchmove", (e) => {
-      if (e.touches.length == 1) {
-        this.#deltaX = this.#X - e.touches[0].clientX;
-        this.#deltaY = this.#Y - e.touches[0].clientY;
-        this.#X = e.touches[0].clientX;
-        this.#Y = e.touches[0].clientY;
+      if (this.#isTouching && e.touches.length === 1) {
+        //        this.#deltaX = this.#X - e.touches[0].clientX;
+        //        this.#deltaY = this.#Y - e.touches[0].clientY;
+        //        this.#X = e.touches[0].clientX;
+        //        this.#Y = e.touches[0].clientY;
       }
     });
 
