@@ -17,7 +17,7 @@ const fsSource = `
 
       vec4 getColor(float iterations) {
         vec3 color = vec3(0.0);
-        if (iterations == 100.0) {
+        if (iterations == 10000.0) {
           return vec4(0.0, 0.0, 0.0, 1.0);
         } else {
           float hue = iterations / 100.0;
