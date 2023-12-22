@@ -3,8 +3,7 @@ window.onload = main;
 
 function main() {
   //-------------------Init GL-------------------//
-  const canvas = document.createElement('canvas');
-  //  const canvas = document.querySelector("#glCanvas");
+  const canvas = document.querySelector("#glCanvas");
   gl = canvas.getContext("webgl");
   if (!gl) {
     alert(

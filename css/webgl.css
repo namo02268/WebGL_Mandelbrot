@@ -15,6 +15,11 @@ body {
   z-index: 0;
 }
 
+main {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
 canvas {
   position: absolute;
   width: 100%;
