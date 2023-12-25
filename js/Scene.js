@@ -41,18 +41,20 @@ class Scene {
     }
 
     gl.uniform1f(this.#shader.GetUniformLocation("zoom"), zoom);
-    document.querySelector(".zoom").textContent = `Zoom: ${(1 / zoom).toFixed(5)}`;
 
-    if (this.inputHandler.IsMouseDown()) {
+    if (this.inputHandler.IsPointerHeld()) {
       offset[0] += this.inputHandler.DeltaX() / gl.canvas.height * zoom;
       offset[1] -= this.inputHandler.DeltaY() / gl.canvas.height * zoom;
       gl.uniform2f(this.#shader.GetUniformLocation("offset"), offset[0], offset[1]);
     }
-    document.querySelector(".pos").textContent = `Position: (${offset[0].toFixed(5)}, ${offset[1].toFixed(5)})`;
 
     this.#Resize();
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.drawArrays(gl.TRIANGLE_FAN, 0, 4);
+
+    document.querySelector(".IsPointerPressed").textContent = `IsPointerPressed: ${this.inputHandler.IsPointerPressed()}`;
+    document.querySelector(".IsPointerHeld").textContent = `IsPointerHeld: ${this.inputHandler.IsPointerHeld()}`;
+    document.querySelector(".IsPointerReleased").textContent = `IsPointerReleased: ${this.inputHandler.IsPointerReleased()}`;
 
     this.inputHandler.Update();
   }

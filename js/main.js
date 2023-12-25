@@ -24,7 +24,6 @@ function main() {
     const deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
     document.querySelector(".fps").textContent = `FPS: ${(1 / deltaTime).toFixed(2)}`;
-
     scene.Draw(deltaTime);
 
     requestAnimationFrame(render);
