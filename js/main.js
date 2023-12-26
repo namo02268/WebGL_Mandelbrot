@@ -11,7 +11,6 @@ function main() {
     );
     return;
   }
-  document.body.appendChild(canvas);
 
   //-------------------Init Scene-------------------//
   const scene = new Scene();

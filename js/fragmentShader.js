@@ -22,7 +22,7 @@ const fsSource = `
         } else {
           float hue = iterations / 100.0;
           color = hsv2rgb(vec3(hue, 1.0, 1.0));
-          return vec4(color.zyx, 1.0);
+          return vec4(color.xxx, 1.0);
         }
       }
 

@@ -34,19 +34,13 @@ class Scene {
   }
 
   Draw(deltaTime) {
-    if (this.inputHandler.Scroll() > 0) {
-      zoom /= zoomStep;
-    } else if (this.inputHandler.Scroll() < 0) {
-      zoom *= zoomStep;
-    }
-
-    gl.uniform1f(this.#shader.GetUniformLocation("zoom"), zoom);
-
+    zoom = this.inputHandler.Zoom();
     if (this.inputHandler.IsPointerHeld()) {
       offset[0] += this.inputHandler.DeltaX() / gl.canvas.height * zoom;
       offset[1] -= this.inputHandler.DeltaY() / gl.canvas.height * zoom;
-      gl.uniform2f(this.#shader.GetUniformLocation("offset"), offset[0], offset[1]);
     }
+    gl.uniform1f(this.#shader.GetUniformLocation("zoom"), zoom);
+    gl.uniform2f(this.#shader.GetUniformLocation("offset"), offset[0], offset[1]);
 
     this.#Resize();
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
