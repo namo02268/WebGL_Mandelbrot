@@ -52,9 +52,13 @@ class Scene {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.drawArrays(gl.TRIANGLE_FAN, 0, 4);
 
-    document.querySelector(".IsPointerPressed").textContent = `IsPointerPressed: ${this.inputHandler.IsPointerPressed()}`;
-    document.querySelector(".IsPointerHeld").textContent = `IsPointerHeld: ${this.inputHandler.IsPointerHeld()}`;
-    document.querySelector(".IsPointerReleased").textContent = `IsPointerReleased: ${this.inputHandler.IsPointerReleased()}`;
+    document.querySelector(".zoom").textContent = `Zoom: ${(1 / zoom).toFixed(5)}`;
+    document.querySelector(".pos").textContent = `Position: (${offset[0].toFixed(5)}, ${offset[1].toFixed(5)})`;
+    document.querySelector(".DebugText").innerHTML = `
+      IsPointerPressed: ${this.inputHandler.IsPointerPressed()}<br>
+      IsPointerHeld: ${this.inputHandler.IsPointerHeld()}<br>
+      IsPointerReleased: ${this.inputHandler.IsPointerReleased()}
+    `;
 
     this.inputHandler.Update();
   }

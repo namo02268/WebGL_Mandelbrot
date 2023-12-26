@@ -5,91 +5,30 @@ class InputHandler {
   #deltaX = 0;
   #deltaY = 0;
   #scroll = 0;
+  #targetPointerId = -1;
   #isPointerPressed = false;
   #isPointerHeld = false;
   #isPointerReleased = false;
-  #updated = false;
 
   // コンストラクタ
   constructor() {
-    window.addEventListener('pointerdown', this.HandlePointerDown);
-    window.addEventListener('pointermove', this.HandlePointerMove);
-    window.addEventListener('pointerup', this.HandlePointerUp);
-    window.addEventListener('wheel', this.HandleWheel);
-
-    window.addEventListener("touchstart", this.HandleTouchStart, { passive: false });
-    window.addEventListener("touchmove", this.HandleTouchMove, { passive: false });
-    window.addEventListener("touchend", this.HandleTouchEnd, { passive: false });
-  }
-
-  // マウスハンドラー関数
-  HandlePointerDown = (event) => {
-    this.#isPointerPressed = true;
-    this.#isPointerHeld = true;
-    this.#isPointerReleased = false;
-    this.#X = event.clientX;
-    this.#Y = event.clientY;
-  }
-  HandlePointerMove = (event) => {
-    this.UpdatePosition(event.clientX, event.clientY);
-  }
-  HandlePointerUp = (event) => {
-    this.#isPointerPressed = false;
-    this.#isPointerHeld = false;
-    this.#isPointerReleased = true;
-  }
-  HandleWheel = (event) => {
-    this.#scroll = event.deltaY;
-  }
-
-  // タッチハンドラー関数
-  HandleTouchStart = (event) => {
-    if (event.touches.length === 1) {
-      this.UpdatePosition(event.touches[0].clientX, event.touches[0].clientY);
-      this.#isPointerPressed = true;
-      this.#isPointerHeld = true;
-      this.#isPointerReleased = false;
-    } else {
-      event.preventDefault();
-    }
-  }
-  HandleTouchMove = (event) => {
-    if (event.touches.length === 1) {
-      this.UpdatePosition(event.clientX, event.clientY);
-    } else {
-      event.preventDefault();
-    }
-  }
-  HandleTouchEnd = (event) => {
-    if (event.touches.length === 1) {
-      this.#isPointerPressed = false;
-      this.#isPointerHeld = false;
-      this.#isPointerReleased = true;
-    } else {
-      event.preventDefault();
-    }
+    window.addEventListener('pointerdown', this.#HandlePointerDown);
+    window.addEventListener('pointermove', this.#HandlePointerMove);
+    window.addEventListener('pointerup', this.#HandlePointerUp);
+    window.addEventListener('wheel', this.#HandleWheel);
+    document.addEventListener('gesturestart', function (e) {
+      e.preventDefault();
+    });
   }
 
   // アップデート・変数のリセット
-  UpdatePosition(clientX, clientY) {
-    if (!this.#updated) {
-      this.#deltaX = this.#X - clientX;
-      this.#deltaY = this.#Y - clientY;
-      this.#X = clientX;
-      this.#Y = clientY;
-      this.#updated = true;
-    }
-  }
-
   Update() {
     this.#isPointerPressed = false;
     this.#isPointerReleased = false;
     this.#deltaX = 0;
     this.#deltaY = 0;
     this.#scroll = 0;
-    this.#updated = false;
   }
-
   // X座標の取得
   X() {
     return this.#X;
@@ -123,4 +62,45 @@ class InputHandler {
     return this.#isPointerReleased;
   }
 
+  // ポインタハンドラー関数
+  #HandlePointerDown = (event) => {
+    if (event.isPrimary) {
+      this.#isPointerPressed = true;
+      this.#isPointerHeld = true;
+      this.#isPointerReleased = false;
+      this.#X = event.clientX;
+      this.#Y = event.clientY;
+      /*
+      switch (event.pointerType) {
+        case "mouse":
+          break;
+        case "touch":
+          break;
+      }
+      */
+    }
+  }
+  #HandlePointerMove = (event) => {
+    if (event.isPrimary) {
+      this.#UpdatePosition(event.clientX, event.clientY);
+    }
+  }
+  #HandlePointerUp = (event) => {
+    if (event.isPrimary) {
+      this.#isPointerPressed = false;
+      this.#isPointerHeld = false;
+      this.#isPointerReleased = true;
+    }
+  }
+
+  #HandleWheel = (event) => {
+    this.#scroll = event.deltaY;
+  }
+
+  #UpdatePosition(clientX, clientY) {
+    this.#deltaX = this.#X - clientX;
+    this.#deltaY = this.#Y - clientY;
+    this.#X = clientX;
+    this.#Y = clientY;
+  }
 }
