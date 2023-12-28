@@ -1,3 +1,5 @@
+import { gl } from "./GL.mjs";
+
 class Shader {
   // private variables
   #m_handle;
@@ -16,8 +18,7 @@ class Shader {
 
     if (!gl.getProgramParameter(this.#m_handle, gl.LINK_STATUS)) {
       alert(
-        "Unable to initialize the shader program: " +
-        gl.getProgramInfoLog(this.#m_handle)
+        "Unable to initialize the shader program: " + gl.getProgramInfoLog(this.#m_handle)
       );
       return null;
     }
@@ -60,3 +61,5 @@ class Shader {
     return shader;
   }
 }
+
+export { Shader };

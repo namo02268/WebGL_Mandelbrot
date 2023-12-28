@@ -5,3 +5,5 @@ const vsSource = `
         gl_Position = a_position;
       }
     `;
+
+export { vsSource };

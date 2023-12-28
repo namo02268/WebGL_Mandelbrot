@@ -1,6 +1,10 @@
-let cubeRotation = 0.0;
+import { gl } from "./GL/GL.mjs";
+import { InputHandler } from "./InputHandler.mjs";
+import { Shader } from "./GL/Shader.mjs";
+import { fsSource } from "./fragmentShader.mjs";
+import { vsSource } from "./vertexShader.mjs";
+import { VertexBuffer } from "./GL/Buffer.mjs";
 let zoom = 1.0;
-let zoomStep = 0.9;
 let offset = [0, 0];
 
 class Scene {
@@ -9,7 +13,7 @@ class Scene {
 
   Init() {
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
-    gl.enable(gl.DEPTH_TEST);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     // Shader
     this.#shader = new Shader(vsSource, fsSource);
@@ -33,27 +37,23 @@ class Scene {
     gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
   }
 
-  Draw(deltaTime) {
+  Draw() {
     zoom = this.inputHandler.Zoom();
     if (this.inputHandler.IsPointerHeld()) {
       offset[0] += this.inputHandler.DeltaX() / gl.canvas.height * zoom;
       offset[1] -= this.inputHandler.DeltaY() / gl.canvas.height * zoom;
     }
-    gl.uniform1f(this.#shader.GetUniformLocation("zoom"), zoom);
-    gl.uniform2f(this.#shader.GetUniformLocation("offset"), offset[0], offset[1]);
+    this.#shader.SetUniform1f("zoom", zoom);
+    this.#shader.SetUniform2f("offset", offset[0], offset[1]);
 
-    this.#Resize();
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.drawArrays(gl.TRIANGLE_FAN, 0, 4);
 
-    document.querySelector(".zoom").textContent = `Zoom: ${(1 / zoom).toFixed(5)}`;
-    document.querySelector(".pos").textContent = `Position: (${offset[0].toFixed(5)}, ${offset[1].toFixed(5)})`;
-    document.querySelector(".DebugText").innerHTML = `
-      IsPointerPressed: ${this.inputHandler.IsPointerPressed()}<br>
-      IsPointerHeld: ${this.inputHandler.IsPointerHeld()}<br>
-      IsPointerReleased: ${this.inputHandler.IsPointerReleased()}
-    `;
+    document.querySelector(".zoom").innerHTML = `<p>Zoom</p><h3>${(1 / zoom).toFixed(5)}</h3>`;
+    document.querySelector(".pos").innerHTML = `<p>Position</p><h3>X: ${offset[0].toFixed(5)}</h3><h3>Y: ${offset[1].toFixed(5)}</h3>`;
+  }
 
+  Update(deltaTime) {
+    this.#Resize();
     this.inputHandler.Update();
   }
 
@@ -68,5 +68,6 @@ class Scene {
       this.#shader.SetUniform2f("resolution", gl.canvas.width, gl.canvas.height);
     }
   }
-
 }
+
+export { Scene };

@@ -46,3 +46,5 @@ const fsSource = `
         gl_FragColor = getColor(iterations);
       }
     `;
+
+export { fsSource };

@@ -1,17 +1,8 @@
-let gl;
+import { Scene } from "./Scene.mjs";
+
 window.onload = main;
 
 function main() {
-  //-------------------Init GL-------------------//
-  const canvas = document.querySelector("#glCanvas");
-  gl = canvas.getContext("webgl");
-  if (!gl) {
-    alert(
-      "Unable to initialize WebGL. Your browser or machine may not support it."
-    );
-    return;
-  }
-
   //-------------------Init Scene-------------------//
   const scene = new Scene();
   scene.Init();
@@ -22,8 +13,9 @@ function main() {
     currentFrame *= 0.001;
     const deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
-    document.querySelector(".fps").textContent = `FPS: ${(1 / deltaTime).toFixed(2)}`;
-    scene.Draw(deltaTime);
+    document.querySelector(".fps").innerHTML = `<p>FPS</p><h3>${(1 / deltaTime).toFixed(2)}</h3>`;
+    scene.Draw();
+    scene.Update(deltaTime);
 
     requestAnimationFrame(render);
   }

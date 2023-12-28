@@ -6,24 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link rel="stylesheet" href="./css/webgl.css" type="text/css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js" integrity="sha512-zhHQR0/H5SEBL3Wn6yYSaTTZej12z0hVZKOv3TwCUXT1z5qeqGcXJLLrbERYRScEDDpYIJhPC1fk31gqR783iQ==" crossorigin="anonymous" defer></script>
-  <script src="./js/GL/Buffer.js" type="text/javascript"></script>
-  <script src="./js/GL/Shader.js" type="text/javascript"></script>
-  <script src="./js/InputHandler.js" type="text/javascript"></script>
-  <script src="./js/fragmentShader.js" type="text/javascript"></script>
-  <script src="./js/vertexShader.js" type="text/javascript"></script>
-  <script src="./js/Scene.js" type="text/javascript"></script>
-  <script src="./js/main.js" type="text/javascript"></script>
+  <script type="module" src="./js/GL/GL.mjs" type="text/javascript"></script>
+  <script type="module" src="./js/GL/Buffer.mjs" type="text/javascript"></script>
+  <script type="module" src="./js/GL/Shader.mjs" type="text/javascript"></script>
+  <script type="module" src="./js/InputHandler.mjs" type="text/javascript"></script>
+  <script type="module" src="./js/fragmentShader.mjs" type="text/javascript"></script>
+  <script type="module" src="./js/vertexShader.mjs" type="text/javascript"></script>
+  <script type="module" src="./js/Scene.mjs" type="text/javascript"></script>
+  <script type="module" src="./js/main.mjs" type="text/javascript"></script>
   <title>WebGL Mandelbrot</title>
 </head>
 
 <body>
   <canvas id="glCanvas"></canvas>
   <main>
-    <div class="canvasText">
-      <div class="fps"></div>
-      <div class="pos"></div>
-      <div class="zoom"></div>
-      <div class="DebugText"></div>
+    <div class="UI">
+      <div class="UIBox fps"></div>
+      <div class="UIBox zoom"></div>
+      <div class="UIBox pos"></div>
     </div>
   </main>
 </body>

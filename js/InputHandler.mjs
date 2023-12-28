@@ -136,3 +136,5 @@ class InputHandler {
   #isPointerHeld = false;     // ポインタが押されているか
   #isPointerReleased = false; // ポインタが離されたか
 }
+
+export { InputHandler };

@@ -31,11 +31,40 @@ video {
   display: none;
 }
 
-.canvasText {
-  font-size: 200%;
+.UI {
+  /* 横幅 */
+  width: 90%;
+  height: 10%;
+  /* グリッド表示 */
+  display: grid;
+  /* グリッドの隙間 */
+  gap: 30px;
+  /* グリッドを中央に配置 */
+  margin: 0 auto;
+  /* デフォルトは4コラム */
+  grid-template-columns: 1fr 1fr 1fr;
+
+  padding: 30px;
+  font-size: 1rem;
   color: black;
   position: absolute;
-  top: 20px;
-  left: 20px;
-  pointer-events: none;
+  bottom: 0%;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.UIBox {
+  background-color: rgba(255, 255, 255, 0.8);
+  /* 角を丸く */
+  border-radius: 8px;
+  /* 影をつける */
+  box-shadow: 0 4px 15px rgba(84, 23, 227, .5);
+  text-align: center;
+  font-size: 1.0rem;
+}
+
+@media (max-width: 600px) {
+  .UIBox {
+    font-size: 0.8rem;
+  }
 }
