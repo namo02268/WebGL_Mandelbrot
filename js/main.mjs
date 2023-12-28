@@ -13,7 +13,7 @@ function main() {
     currentFrame *= 0.001;
     const deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
-    document.querySelector(".fps").innerHTML = `<p>FPS</p><h3>${(1 / deltaTime).toFixed(2)}</h3>`;
+    document.querySelector(".fps").textContent = `${(1 / deltaTime).toFixed(2)}`;
     scene.Draw();
     scene.Update(deltaTime);
 

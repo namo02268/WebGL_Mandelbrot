@@ -48,8 +48,8 @@ class Scene {
 
     gl.drawArrays(gl.TRIANGLE_FAN, 0, 4);
 
-    document.querySelector(".zoom").innerHTML = `<p>Zoom</p><h3>${(1 / zoom).toFixed(5)}</h3>`;
-    document.querySelector(".pos").innerHTML = `<p>Position</p><h3>X: ${offset[0].toFixed(5)}</h3><h3>Y: ${offset[1].toFixed(5)}</h3>`;
+    document.querySelector(".zoom").innerHTML = `${(1 / zoom).toFixed(5)}`;
+    document.querySelector(".posX").innerHTML = `X: ${offset[0].toFixed(5)}`; document.querySelector(".posY").innerHTML = `Y: ${offset[1].toFixed(5)}`;
   }
 
   Update(deltaTime) {
