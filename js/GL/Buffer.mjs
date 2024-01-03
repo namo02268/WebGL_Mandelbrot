@@ -1,30 +1,65 @@
 import { gl } from "./GL.mjs";
 
-class VertexBuffer {
+class BufferBase {
   /*---------------------------------------
     パブリック関数
   ---------------------------------------*/
-  constructor() {
-    this.#m_handle = gl.createBuffer();
+  // コンストラクタ
+  constructor(bufferType) {
+    this.#m_id = gl.createBuffer();
+    this.#m_bufferType = bufferType;
+    this.#m_usage = gl.STATIC_DRAW;
+    this.#m_dataSize = 0;
   }
-
+  // バッファの解放
+  FreeBuffer() {
+    if (this.#m_id !== 0) {
+      gl.deleteBuffer(this.#m_id);
+      this.#m_id = 0;
+    }
+  }
+  // バッファのバインド
   Bind() {
-    gl.bindBuffer(gl.ARRAY_BUFFER, this.#m_handle);
+    gl.bindBuffer(this.#m_bufferType, this.#m_id);
   }
-
-  SetData(data) {
+  // バッファのアンバインド
+  UnBind() {
+    gl.bindBuffer(this.#m_bufferType, 0);
+  }
+  // 頂点データのセット
+  SetData(size, data) {
+    this.#m_dataSize = size;
     this.Bind();
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data), gl.STATIC_DRAW);
+    gl.bufferData(this.#m_bufferType, new Float32Array(data), this.#m_usage);
   }
-
-  GetID() {
-    return this.#m_handle;
+  // 頂点データの追加セット
+  SetSubData(size, offset, data) {
+    if (size + offset <= this.#m_dataSize) {
+      this.Bind();
+      gl.bufferSubData(this.#m_bufferType, offset, data);
+    }
+  }
+  SetUsage(usage) {
+    this.#m_usage = usage;
+  }
+  // バッファハンドルの取得
+  GetHandle() {
+    return this.#m_id;
   }
 
   /*---------------------------------------
-  プライベート変数
+    プライベート変数
   ---------------------------------------*/
-  #m_handle;
+  #m_id;  // バッファの固有ID
+  #m_usage;
+  #m_bufferType;
+  #m_dataSize;
+}
+
+class VertexBuffer extends BufferBase {
+  constructor() {
+    super(gl.ARRAY_BUFFER);
+  }
 }
 
 export { VertexBuffer };

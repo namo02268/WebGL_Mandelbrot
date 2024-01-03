@@ -1,26 +1,30 @@
 import { gl } from "./GL/GL.mjs";
 import { InputHandler } from "./InputHandler.mjs";
+import { GLWindow } from "./GL/GLWindow.mjs";
 import { Shader } from "./GL/Shader.mjs";
 import { fsSource } from "./fragmentShader.mjs";
 import { vsSource } from "./vertexShader.mjs";
 import { VertexBuffer } from "./GL/Buffer.mjs";
+
 let zoom = 1.0;
 let offset = [0, 0];
 
 class Scene {
-  #shader;
-  inputHandler = new InputHandler();
-
+  /*---------------------------------------
+    パブリック関数
+  ---------------------------------------*/
+  // 初期化
   Init() {
-    gl.clearColor(0.0, 0.0, 0.0, 1.0);
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    // Window
+    this.#m_window = new GLWindow();
 
     // Shader
-    this.#shader = new Shader(vsSource, fsSource);
-    this.#shader.Bind();
+    this.#m_shader = new Shader();
+    this.#m_shader.Compile(vsSource, fsSource);
+    this.#m_shader.Bind();
 
-    // Resize
-    this.#Resize();
+    // InputHandler
+    this.#m_inputHandler = new InputHandler();
 
     // Buffer
     const positionBuffer = new VertexBuffer();
@@ -30,21 +34,23 @@ class Scene {
       1, 1,
       1, -1,
     ];
-    positionBuffer.SetData(positions);
+    positionBuffer.SetData(positions.length, positions);
 
-    const positionAttributeLocation = this.#shader.GetAttribLocation("a_position");
+    const positionAttributeLocation = this.#m_shader.GetAttribLocation("a_position");
     gl.enableVertexAttribArray(positionAttributeLocation);
     gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
   }
 
+  // 描画
   Draw() {
-    zoom = this.inputHandler.Zoom();
-    if (this.inputHandler.IsPointerHeld()) {
-      offset[0] += this.inputHandler.DeltaX() / gl.canvas.height * zoom;
-      offset[1] -= this.inputHandler.DeltaY() / gl.canvas.height * zoom;
+    zoom = this.#m_inputHandler.Zoom();
+    if (this.#m_inputHandler.IsPointerHeld()) {
+      offset[0] += this.#m_inputHandler.DeltaX() / gl.canvas.height * zoom;
+      offset[1] -= this.#m_inputHandler.DeltaY() / gl.canvas.height * zoom;
     }
-    this.#shader.SetUniform1f("zoom", zoom);
-    this.#shader.SetUniform2f("offset", offset[0], offset[1]);
+    this.#m_shader.SetUniform1f("zoom", zoom);
+    this.#m_shader.SetUniform2f("offset", offset[0], offset[1]);
+    this.#m_shader.SetUniform2f("resolution", gl.canvas.width, gl.canvas.height);
 
     gl.drawArrays(gl.TRIANGLE_FAN, 0, 4);
 
@@ -52,22 +58,18 @@ class Scene {
     document.querySelector(".posX").innerHTML = `X: ${offset[0].toFixed(5)}`; document.querySelector(".posY").innerHTML = `Y: ${offset[1].toFixed(5)}`;
   }
 
+  // 更新
   Update(deltaTime) {
-    this.#Resize();
-    this.inputHandler.Update();
+    this.#m_window.Resize();
+    this.#m_inputHandler.Update();
   }
 
-  #Resize() {
-    const displayWidth = gl.canvas.parentElement.clientWidth;
-    const displayHeight = gl.canvas.parentElement.clientHeight;
-
-    if (gl.canvas.width !== displayWidth || gl.canvas.height !== displayHeight) {
-      gl.canvas.width = displayWidth;
-      gl.canvas.height = displayHeight;
-      gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-      this.#shader.SetUniform2f("resolution", gl.canvas.width, gl.canvas.height);
-    }
-  }
+  /*---------------------------------------
+    プライベート変数
+  ---------------------------------------*/
+  #m_shader;
+  #m_inputHandler;
+  #m_window;;
 }
 
 export { Scene };
