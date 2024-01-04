@@ -37,6 +37,10 @@ class InputHandler {
   Zoom() {
     return this.#zoom;
   }
+  // ズーム量のセット
+  SetZoom(zoom) {
+    this.#zoom = zoom;
+  }
   // ポインタが押されたか
   IsPointerPressed() {
     return this.#isPointerPressed;

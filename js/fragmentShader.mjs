@@ -1,9 +1,12 @@
 const fsSource = `
       precision mediump float;
+      precision highp int;
+
       uniform vec2 resolution;
       uniform float time;
       uniform vec2 offset;
       uniform float zoom;
+      uniform int iterations;
 
       vec2 complexSquare(vec2 z) {
         return vec2(z.x * z.x - z.y * z.y, 2.0 * z.x * z.y);
@@ -29,7 +32,7 @@ const fsSource = `
       int mandelbrot(vec2 uv) {
         vec2 z = vec2(0.0, 0.0);
         int i = 0;
-        for (int j = 0; j < 256; j++) {
+        for (int j = 0; j < 2560 ; j++) {
           z = complexSquare(z) + uv;
           if (length(z) > 2.0) {
             break;

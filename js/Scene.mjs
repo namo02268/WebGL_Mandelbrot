@@ -39,6 +39,11 @@ class Scene {
     const positionAttributeLocation = this.#m_shader.GetAttribLocation("a_position");
     gl.enableVertexAttribArray(positionAttributeLocation);
     gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
+
+    document.querySelector(".resetButton").addEventListener("click", () => {
+      this.#m_inputHandler.SetZoom(1.0);
+      offset = [0, 0];
+    });
   }
 
   // 描画
@@ -48,6 +53,7 @@ class Scene {
       offset[0] += this.#m_inputHandler.DeltaX() / gl.canvas.height * zoom;
       offset[1] -= this.#m_inputHandler.DeltaY() / gl.canvas.height * zoom;
     }
+    this.#m_shader.SetUniform1f("iteration", 256);
     this.#m_shader.SetUniform1f("zoom", zoom);
     this.#m_shader.SetUniform2f("offset", offset[0], offset[1]);
     this.#m_shader.SetUniform2f("resolution", gl.canvas.width, gl.canvas.height);
