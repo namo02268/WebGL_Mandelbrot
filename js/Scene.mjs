@@ -66,6 +66,9 @@ class Scene {
 
   // 更新
   Update(deltaTime) {
+    if (this.#m_inputHandler.IsKeyPressed(187)) {
+      console.log("test");
+    }
     this.#m_window.Resize();
     this.#m_inputHandler.Update();
   }
